@@ -1,0 +1,49 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Reactive Form</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="myForm" novalidate>
+      <mat-form-field appearance="legacy">
+        <mat-label>Телефон:</mat-label>
+        <span matPrefix>+7</span>
+        <input
+          formControlName="phone"
+          matInput
+          name="phone"
+          type="text"
+          validatefield
+          pattern="[0-9]{10}"
+        />
+         <!-- передаем паттерн в директиву через pattern="..." -->
+        <mat-error
+          *ngIf="myForm.controls.phone?.hasError('validatefieldPattern')"
+        >
+          Your value
+          <strong>{{
+            myForm.controls.phone.getError("validatefieldCurrent")
+          }}</strong>
+          should use pattern
+          <strong>{{
+            myForm.controls.phone.getError("validatefieldPattern")
+          }}</strong>
+        </mat-error>
+        <button
+          mat-button
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="togglePhone()"
+        >
+          <mat-icon *ngIf="myForm.controls['phone'].disabled"
+            >toggle_off</mat-icon
+          >
+          <mat-icon *ngIf="myForm.controls['phone'].enabled"
+            >toggle_on</mat-icon
+          >
+        </button>
+        <mat-hint>Введите телефон</mat-hint>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+</mat-card>
